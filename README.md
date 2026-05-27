@@ -41,7 +41,7 @@ azd up
 After the first `azd up`, grant the backend's managed identity read access to the database:
 
 1. Find the MI name from the deployment output: `BACKEND_MI_DISPLAY_NAME`
-2. Connect to `sqldb-hcc-g36o34t3bsjyc` on `nh-sql-external.database.windows.net` as an Entra ID admin
+2. Connect to the database as an Entra ID admin
 3. Run `scripts/grant-sql-access.sql` with the MI name substituted
 
 ## Architecture
