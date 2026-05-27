@@ -1,0 +1,38 @@
+name: contosotech-hcc-poc
+metadata:
+  template: contosotech-hcc-poc@0.0.1
+
+hooks:
+  postprovision:
+    windows:
+      shell: pwsh
+      run: |
+        Write-Host "Waiting 60s for RBAC role propagation before deploying containers..."
+        Start-Sleep -Seconds 60
+    posix:
+      shell: sh
+      run: |
+        echo "Waiting 60s for RBAC role propagation before deploying containers..."
+        sleep 60
+
+services:
+  backend:
+    project: ./backend
+    host: containerapp
+    language: python
+    docker:
+      path: ./Dockerfile
+      context: .
+
+  frontend:
+    project: ./frontend
+    host: containerapp
+    language: ts
+    docker:
+      path: ./Dockerfile
+      context: .
+
+infra:
+  provider: bicep
+  path: ./infra
+  module: main
